@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gamer Health Assistant</title>
+<style>
+:root{--bg:#0b1020;--card:#121a30;--card2:#18223d;--text:#eef3ff;--muted:#9aa8c7;--accent:#7c8cff;--good:#45d483;--warn:#ffcc66}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,sans-serif;background:linear-gradient(145deg,#090d19,#111a31);color:var(--text)}
+.app{max-width:1050px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px}
+h1{font-size:28px;margin:0 0 5px}.sub{color:var(--muted)}button{border:0;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer;background:var(--accent);color:white}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.card{background:rgba(18,26,48,.92);border:1px solid #253252;border-radius:18px;padding:20px;box-shadow:0 12px 35px #0003}
+.timer{text-align:center}.time{font-size:58px;font-weight:800;letter-spacing:2px;margin:15px 0}.actions{display:flex;justify-content:center;gap:10px}.secondary{background:var(--card2)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.stat{background:var(--card2);border-radius:14px;padding:14px}.num{font-size:25px;font-weight:800}.label{font-size:12px;color:var(--muted)}
+h2{font-size:18px;margin:0 0 14px}.exercise{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #263452}.exercise:last-child{border-bottom:0}.exercise b{display:block}.exercise span{font-size:12px;color:var(--muted)}
+input,textarea{width:100%;background:#0d1427;color:var(--text);border:1px solid #2a395d;border-radius:12px;padding:13px;margin:7px 0;font:inherit}textarea{min-height:90px;resize:vertical}.reply{background:var(--card2);border-radius:14px;padding:15px;margin-top:10px;line-height:1.55}.tag{display:inline-block;background:#26345b;padding:5px 9px;border-radius:99px;font-size:12px;margin-right:5px}.notice{font-size:12px;color:var(--muted);margin-top:12px}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.top{align-items:flex-start}.time{font-size:48px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div><h1>🎮 Gamer Health Assistant</h1><div class="sub">Play better. Move better. Take smarter breaks.</div></div>
+    <button onclick="quickBreak()">Take a break</button>
+  </div>
+
+  <div class="grid">
+    <section class="card timer">
+      <h2>Gaming Session</h2>
+      <div id="time" class="time">00:00:00</div>
+      <div class="actions">
+        <button id="start" onclick="toggleTimer()">Start session</button>
+        <button class="secondary" onclick="resetTimer()">Reset</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><div id="sessions" class="num">0</div><div class="label">Sessions today</div></div>
+        <div class="stat"><div id="breaks" class="num">0</div><div class="label">Breaks today</div></div>
+        <div class="stat"><div id="minutes" class="num">0</div><div class="label">Gaming minutes</div></div>
+      </div>
+      <div class="notice">This prototype tracks time locally in your browser. It does not diagnose medical conditions.</div>
+    </section>
+
+    <section class="card">
+      <h2>🪑 Quick Ergonomics Check</h2>
+      <div class="exercise"><div><b>Screen position</b><span>Top of screen around eye level.</span></div><span class="tag">Eyes</span></div>
+      <div class="exercise"><div><b>Shoulders</b><span>Keep them relaxed; avoid shrugging.</span></div><span class="tag">Neck</span></div>
+      <div class="exercise"><div><b>Wrists</b><span>Keep a neutral position while using mouse/keyboard.</span></div><span class="tag">Hands</span></div>
+      <div class="exercise"><div><b>Feet</b><span>Support both feet when possible.</span></div><span class="tag">Posture</span></div>
+    </section>
+
+    <section class="card">
+      <h2>🧘 3-Minute Reset</h2>
+      <div class="exercise"><div><b>Chin tucks</b><span>Gentle, 8–10 repetitions.</span></div><b>30s</b></div>
+      <div class="exercise"><div><b>Shoulder blade squeezes</b><span>Relax, squeeze gently, release.</span></div><b>30s</b></div>
+      <div class="exercise"><div><b>Chest stretch</b><span>Comfortable stretch, no forcing.</span></div><b>30s</b></div>
+      <div class="exercise"><div><b>Wrist movement</b><span>Gentle flex/extend and shake out hands.</span></div><b>30s</b></div>
+      <div class="exercise"><div><b>Walk around</b><span>Stand up and move for a moment.</span></div><b>60s</b></div>
+    </section>
+
+    <section class="card">
+      <h2>🤖 Ask the Assistant</h2>
+      <textarea id="question" placeholder="Example: I've been gaming for 3 hours and my neck feels stiff..."></textarea>
+      <button onclick="ask()">Get guidance</button>
+      <div id="reply"></div>
+    </section>
+  </div>
+</div>
+<script>
+let running=false,startAt=0,elapsed=0,interval=null;
+const $=id=>document.getElementById(id);
+function fmt(s){let h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return [h,m,x].map(v=>String(v).padStart(2,'0')).join(':')}
+function render(){let s=Math.floor(elapsed+(running?(Date.now()-startAt)/1000:0));$('time').textContent=fmt(s)}
+function toggleTimer(){
+ if(!running){running=true;startAt=Date.now();$('start').textContent='Pause session';interval=setInterval(render,250)}
+ else{elapsed+= (Date.now()-startAt)/1000;running=false;clearInterval(interval);$('start').textContent='Resume session';saveStats(Math.round(elapsed/60));}
+ render();
+}
+function resetTimer(){if(running)toggleTimer();elapsed=0;render()}
+function saveStats(min){let d=JSON.parse(localStorage.gha||'{"sessions":0,"breaks":0,"minutes":0}');d.sessions++;d.minutes+=min;localStorage.gha=JSON.stringify(d);loadStats()}
+function loadStats(){let d=JSON.parse(localStorage.gha||'{"sessions":0,"breaks":0,"minutes":0}');$('sessions').textContent=d.sessions;$('breaks').textContent=d.breaks;$('minutes').textContent=d.minutes}
+function quickBreak(){let d=JSON.parse(localStorage.gha||'{"sessions":0,"breaks":0,"minutes":0}');d.breaks++;localStorage.gha=JSON.stringify(d);loadStats();alert('Break time! Stand up, relax your shoulders, look away from the screen, and move gently for a few minutes.')}
+function ask(){
+ const q=$('question').value.toLowerCase().trim(); if(!q)return;
+ let tips=['Take a short break and change position.','Keep movements gentle and within a comfortable range.','Check your screen height, chair support, and mouse/keyboard position.'];
+ if(q.includes('neck')||q.includes('shoulder')) tips=['Try a few gentle chin tucks and shoulder-blade squeezes.','Relax your shoulders and avoid holding your head forward for long periods.','If discomfort persists or is severe, consider getting assessed by a qualified health professional.'];
+ if(q.includes('wrist')||q.includes('hand')) tips=['Give your hands a break and gently move the wrists and fingers.','Check that your wrist is not held in an extreme bent position.','Persistent, worsening, numb, or weak symptoms should be assessed by a healthcare professional.'];
+ if(q.includes('eye')||q.includes('eyes')) tips=['Look away from the screen regularly and blink normally.','Reduce glare and adjust screen brightness for comfort.','If you develop persistent eye pain or vision changes, seek professional advice.'];
+ $('reply').innerHTML='<div class="reply"><b>Here’s a general wellness suggestion:</b><ul>'+tips.map(x=>'<li>'+x+'</li>').join('')+'</ul><small>This is educational guidance, not a diagnosis or a substitute for professional medical care.</small></div>';
+}
+loadStats();render();
+</script>
+</body>
+</html>
