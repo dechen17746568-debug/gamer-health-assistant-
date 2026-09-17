@@ -8,6 +8,7 @@
 <title>Gamer Health Assistant</title>
 
 <style>
+
 :root{
   --bg:#0b1020;
   --card:#121a30;
@@ -19,7 +20,9 @@
   --warn:#ffcc66;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
@@ -59,6 +62,11 @@ button{
   cursor:pointer;
   background:var(--accent);
   color:white;
+}
+
+button:hover{
+  opacity:.9;
+  transform:translateY(-1px);
 }
 
 .grid{
@@ -195,6 +203,7 @@ h2{
   border-radius:99px;
   font-size:12px;
   margin-right:5px;
+  white-space:nowrap;
 }
 
 input,textarea{
@@ -233,13 +242,142 @@ textarea{
   margin-bottom:12px;
 }
 
+
+/* RESET PLAYER */
+
+.reset-player{
+  background:#0d1427;
+  border:1px solid #2a395d;
+  border-radius:16px;
+  padding:18px;
+  margin-top:15px;
+  text-align:center;
+}
+
+.reset-icon{
+  font-size:55px;
+  margin:8px 0;
+}
+
+.reset-name{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.reset-instruction{
+  color:var(--muted);
+  line-height:1.5;
+  min-height:48px;
+}
+
+.reset-time{
+  font-size:50px;
+  font-weight:800;
+  margin:12px 0;
+}
+
+.progress-container{
+  width:100%;
+  height:9px;
+  background:#263452;
+  border-radius:99px;
+  overflow:hidden;
+  margin:12px 0 18px;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:var(--accent);
+  transition:width:.3s;
+}
+
+.reset-actions{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.reset-status{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:12px;
+}
+
+.reset-list{
+  margin-top:18px;
+  text-align:left;
+}
+
+.reset-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:6px;
+  background:#121a30;
+  color:var(--muted);
+  transition:.2s;
+}
+
+.reset-item.active{
+  background:#202c50;
+  color:var(--text);
+  border:1px solid var(--accent);
+}
+
+.reset-item.done{
+  color:var(--good);
+}
+
+.reset-item-icon{
+  font-size:22px;
+}
+
+
+/* COMPLETION */
+
+.reset-complete{
+  padding:20px;
+  text-align:center;
+}
+
+.reset-complete-icon{
+  font-size:60px;
+}
+
+.reset-complete h3{
+  font-size:24px;
+  margin:10px 0;
+}
+
+.reset-complete p{
+  color:var(--muted);
+}
+
+
+/* RESPONSIVE */
+
 @media(max-width:760px){
+
+  .app{
+    padding:15px;
+  }
+
   .grid{
     grid-template-columns:1fr;
   }
 
   .top{
     align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .top button{
+    width:100%;
   }
 
   .time{
@@ -249,28 +387,45 @@ textarea{
   .platform-grid{
     grid-template-columns:1fr;
   }
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .reset-time{
+    font-size:42px;
+  }
+
 }
+
 </style>
 
 </head>
+
 
 <body>
 
 <div class="app">
 
+
 <div class="top">
 
 <div>
 <h1>🎮 Gamer Health Assistant</h1>
-<div class="sub">Play better. Move better. Take smarter breaks.</div>
+<div class="sub">
+Play better. Move better. Take smarter breaks.
+</div>
 </div>
 
-<button onclick="quickBreak()">Take a break</button>
+<button onclick="quickBreak()">
+Take a break
+</button>
 
 </div>
 
 
-<!-- PLATFORM SELECTION -->
+
+<!-- PLATFORM -->
 
 <section class="card">
 
@@ -278,51 +433,95 @@ textarea{
 
 <div class="platform-grid">
 
-<div id="pcPlatform" class="platform" onclick="selectPlatform('pc')">
+<div id="pcPlatform"
+     class="platform"
+     onclick="selectPlatform('pc')">
+
 <span class="platform-icon">🖥️</span>
-<div class="platform-name">PC / Laptop</div>
-<div class="platform-desc">Keyboard, mouse & screen</div>
+
+<div class="platform-name">
+PC / Laptop
 </div>
 
-<div id="mobilePlatform" class="platform" onclick="selectPlatform('mobile')">
+<div class="platform-desc">
+Keyboard, mouse & screen
+</div>
+
+</div>
+
+
+<div id="mobilePlatform"
+     class="platform"
+     onclick="selectPlatform('mobile')">
+
 <span class="platform-icon">📱</span>
-<div class="platform-name">Mobile</div>
-<div class="platform-desc">Phone & touchscreen gaming</div>
+
+<div class="platform-name">
+Mobile
 </div>
 
-<div id="consolePlatform" class="platform" onclick="selectPlatform('console')">
+<div class="platform-desc">
+Phone & touchscreen gaming
+</div>
+
+</div>
+
+
+<div id="consolePlatform"
+     class="platform"
+     onclick="selectPlatform('console')">
+
 <span class="platform-icon">🎮</span>
-<div class="platform-name">Console</div>
-<div class="platform-desc">Controller gaming</div>
+
+<div class="platform-name">
+Console
+</div>
+
+<div class="platform-desc">
+Controller gaming
 </div>
 
 </div>
+
+</div>
+
 
 <div id="platformStatus" class="selected">
-Choose your platform to personalize your ergonomics guidance.
+Choose your platform to personalize your guidance.
 </div>
 
 </section>
 
 
+
 <div class="grid">
 
 
-<!-- TIMER -->
+
+<!-- GAMING TIMER -->
 
 <section class="card timer">
 
 <h2>Gaming Session</h2>
 
-<div id="time" class="time">00:00:00</div>
+<div id="time" class="time">
+00:00:00
+</div>
 
 <div class="actions">
 
-<button id="start" onclick="toggleTimer()">Start session</button>
+<button id="start"
+        onclick="toggleTimer()">
+Start session
+</button>
 
-<button class="secondary" onclick="resetTimer()">Reset</button>
+<button class="secondary"
+        onclick="resetTimer()">
+Reset
+</button>
 
 </div>
+
 
 <div class="stats">
 
@@ -343,265 +542,569 @@ Choose your platform to personalize your ergonomics guidance.
 
 </div>
 
+
 <div class="notice">
-This prototype tracks time locally in your browser. It does not diagnose medical conditions.
+This prototype tracks time locally in your browser.
+It does not diagnose medical conditions.
 </div>
 
 </section>
+
 
 
 <!-- ERGONOMICS -->
 
 <section class="card">
 
-<h2>🪑 Platform-Specific Ergonomics</h2>
+<h2>
+🪑 Platform-Specific Ergonomics
+</h2>
 
 <div id="ergonomics">
 
 <div class="exercise">
+
 <div>
+
 <b>Choose a platform</b>
-<span>We'll show recommendations based on how you game.</span>
+
+<span>
+We'll show recommendations based on how you game.
+</span>
+
 </div>
-<span class="tag">Setup</span>
+
+<span class="tag">
+Setup
+</span>
+
 </div>
 
 </div>
 
 </section>
+
 
 
 <!-- RESET -->
 
 <section class="card">
 
-<h2>🧘 Platform-Specific 3-Minute Reset</h2>
+<h2>
+🧘 3-Minute Gamer Reset
+</h2>
 
-<div id="resetExercises">
+<div id="resetArea">
 
 <div class="exercise">
+
 <div>
+
 <b>Choose your gaming platform</b>
-<span>Your reset exercises will adapt to your setup.</span>
+
+<span>
+Your reset exercises will adapt to your setup.
+</span>
+
 </div>
-<span class="tag">3 min</span>
+
+<span class="tag">
+3 min
+</span>
+
 </div>
 
 </div>
 
 </section>
+
 
 
 <!-- ASSISTANT -->
 
 <section class="card">
 
-<h2>🤖 Ask the Assistant</h2>
+<h2>
+🤖 Ask the Assistant
+</h2>
 
-<textarea id="question"
-placeholder="Example: I've been gaming for 3 hours and my neck feels stiff..."></textarea>
+<textarea
+id="question"
+placeholder="Example: I've been gaming for 3 hours and my neck feels stiff...">
+</textarea>
 
-<button onclick="ask()">Get guidance</button>
+<button onclick="ask()">
+Get guidance
+</button>
 
 <div id="reply"></div>
 
 </section>
 
+
 </div>
 
 </div>
+
 
 
 <script>
 
-let running=false,startAt=0,elapsed=0,interval=null;
+
+/* =========================
+   BASIC HELPERS
+========================= */
+
+const $ = id => document.getElementById(id);
 
 
-/* TIMER */
 
-const $=id=>document.getElementById(id);
+/* =========================
+   GAMING TIMER
+========================= */
+
+let running = false;
+let startAt = 0;
+let elapsed = 0;
+let interval = null;
+
 
 function fmt(s){
-  let h=Math.floor(s/3600),
-      m=Math.floor(s%3600/60),
-      x=s%60;
+
+  let h = Math.floor(s / 3600);
+
+  let m = Math.floor(
+    (s % 3600) / 60
+  );
+
+  let x = s % 60;
 
   return [h,m,x]
-    .map(v=>String(v).padStart(2,'0'))
+    .map(v => String(v).padStart(2,'0'))
     .join(':');
+
 }
+
 
 function render(){
 
-  let s=Math.floor(
-    elapsed+
-    (running?(Date.now()-startAt)/1000:0)
+  let s = Math.floor(
+    elapsed +
+    (
+      running
+      ? (Date.now() - startAt) / 1000
+      : 0
+    )
   );
 
-  $('time').textContent=fmt(s);
+  $('time').textContent = fmt(s);
+
 }
+
 
 function toggleTimer(){
 
   if(!running){
 
-    running=true;
-    startAt=Date.now();
+    running = true;
 
-    $('start').textContent='Pause session';
+    startAt = Date.now();
 
-    interval=setInterval(render,250);
+    $('start').textContent =
+      'Pause session';
 
-  }else{
+    interval =
+      setInterval(render,250);
 
-    elapsed+=(Date.now()-startAt)/1000;
+  }
 
-    running=false;
+  else{
+
+    elapsed +=
+      (Date.now() - startAt) / 1000;
+
+    running = false;
 
     clearInterval(interval);
 
-    $('start').textContent='Resume session';
+    $('start').textContent =
+      'Resume session';
 
-    saveStats(Math.round(elapsed/60));
+    saveStats(
+      Math.round(elapsed / 60)
+    );
 
   }
 
   render();
+
 }
+
 
 function resetTimer(){
 
-  if(running)toggleTimer();
+  if(running){
 
-  elapsed=0;
+    elapsed +=
+      (Date.now() - startAt) / 1000;
+
+    running = false;
+
+    clearInterval(interval);
+
+    $('start').textContent =
+      'Start session';
+
+  }
+
+  elapsed = 0;
 
   render();
+
 }
 
 
-/* STATS */
+
+/* =========================
+   STATS
+========================= */
+
+function getStats(){
+
+  return JSON.parse(
+    localStorage.gha ||
+    '{"sessions":0,"breaks":0,"minutes":0}'
+  );
+
+}
+
 
 function saveStats(min){
 
-  let d=JSON.parse(
-    localStorage.gha||
-    '{"sessions":0,"breaks":0,"minutes":0}'
-  );
+  let d = getStats();
 
   d.sessions++;
-  d.minutes+=min;
 
-  localStorage.gha=JSON.stringify(d);
+  d.minutes += min;
+
+  localStorage.gha =
+    JSON.stringify(d);
 
   loadStats();
-}
 
-function loadStats(){
-
-  let d=JSON.parse(
-    localStorage.gha||
-    '{"sessions":0,"breaks":0,"minutes":0}'
-  );
-
-  $('sessions').textContent=d.sessions;
-  $('breaks').textContent=d.breaks;
-  $('minutes').textContent=d.minutes;
 }
 
 
-/* BREAK */
+function addBreak(){
 
-function quickBreak(){
-
-  let d=JSON.parse(
-    localStorage.gha||
-    '{"sessions":0,"breaks":0,"minutes":0}'
-  );
+  let d = getStats();
 
   d.breaks++;
 
-  localStorage.gha=JSON.stringify(d);
+  localStorage.gha =
+    JSON.stringify(d);
 
   loadStats();
 
-  alert(
-    'Break time! Stand up, relax your shoulders, look away from the screen, and move gently for a few minutes.'
-  );
 }
 
-/* PLATFORM-SPECIFIC RESET */
 
-function showReset(platform){
+function loadStats(){
 
-  let exercises = {
+  let d = getStats();
 
-    pc: [
-      ['🧠 Chin tucks','Gently draw your chin backward without looking down.','30s'],
-      ['💪 Shoulder blade squeezes','Gently bring your shoulder blades together and relax.','30s'],
-      ['⌨️ Wrist & forearm mobility','Move your wrists gently through comfortable ranges.','30s'],
-      ['🫁 Chest stretch','Open your chest gently and avoid forcing the stretch.','30s'],
-      ['🚶 Stand & walk','Stand up and walk around to change your position.','60s']
+  $('sessions').textContent =
+    d.sessions;
+
+  $('breaks').textContent =
+    d.breaks;
+
+  $('minutes').textContent =
+    d.minutes;
+
+}
+
+
+
+/* =========================
+   QUICK BREAK
+========================= */
+
+function quickBreak(){
+
+  addBreak();
+
+  alert(
+    '🧘 Break time!\n\n' +
+    'Stand up, relax your shoulders, ' +
+    'look away from the screen and ' +
+    'move gently for a few minutes.'
+  );
+
+}
+
+
+
+/* =========================
+   PLATFORM DATA
+========================= */
+
+const platformData = {
+
+  pc:{
+
+    name:'🖥️ PC / Laptop',
+
+    tips:[
+
+      [
+        'Monitor position',
+        'Keep the top of the screen around eye level and avoid prolonged neck bending.',
+        'Eyes'
+      ],
+
+      [
+        'Chair & back',
+        'Use back support and avoid collapsing forward for long periods.',
+        'Back'
+      ],
+
+      [
+        'Keyboard & mouse',
+        'Keep your wrists comfortable and avoid extreme bending while playing.',
+        'Hands'
+      ],
+
+      [
+        'Shoulders',
+        'Keep shoulders relaxed instead of constantly shrugging or reaching forward.',
+        'Neck'
+      ],
+
+      [
+        'Feet',
+        'Support both feet when possible and avoid staying in one position too long.',
+        'Posture'
+      ]
+
     ],
 
-    mobile: [
-      ['🧠 Chin tucks','Bring your head gently backward instead of pushing it forward.','30s'],
-      ['↔️ Neck movement','Slowly turn your head left and right within a comfortable range.','30s'],
-      ['👍 Thumb mobility','Open and close your hands and gently move your thumbs.','30s'],
-      ['🤲 Wrist mobility','Move your wrists gently and relax your grip.','30s'],
-      ['🚶 Stand & move','Put the phone down and move around for a minute.','60s']
-    ],
+    reset:[
 
-    console: [
-      ['🧠 Neck reset','Gently bring your head back and relax your neck.','30s'],
-      ['🔄 Shoulder rolls','Slowly roll your shoulders backward and relax.','30s'],
-      ['🎮 Hand & wrist mobility','Relax your controller grip and gently move your fingers and wrists.','30s'],
-      ['🫁 Chest stretch','Open your chest gently and take comfortable breaths.','30s'],
-      ['🚶 Stand & move','Get up from the gaming position and move around.','60s']
+      [
+        '🧠',
+        'Chin Tucks',
+        'Gently draw your chin backward without looking down.',
+        30
+      ],
+
+      [
+        '💪',
+        'Shoulder Blade Squeezes',
+        'Gently bring your shoulder blades together, then relax.',
+        30
+      ],
+
+      [
+        '⌨️',
+        'Wrist & Forearm Mobility',
+        'Move your wrists gently through comfortable ranges.',
+        30
+      ],
+
+      [
+        '🫁',
+        'Chest Opening',
+        'Open your chest gently and take comfortable breaths.',
+        30
+      ],
+
+      [
+        '🚶',
+        'Stand & Walk',
+        'Stand up and walk around to change your position.',
+        60
+      ]
+
     ]
 
-  };
+  },
 
-  if(!exercises[platform]){
 
-    $('resetExercises').innerHTML = `
-      <div class="exercise">
-        <div>
-          <b>Choose your gaming platform</b>
-          <span>Your reset exercises will adapt to your setup.</span>
-        </div>
-        <span class="tag">3 min</span>
-      </div>
-    `;
+  mobile:{
 
-    return;
+    name:'📱 Mobile Gaming',
+
+    tips:[
+
+      [
+        'Phone position',
+        'Try bringing the phone closer to eye level instead of constantly looking down.',
+        'Neck'
+      ],
+
+      [
+        'Thumbs',
+        'Avoid prolonged forceful thumb movements and take regular hand breaks.',
+        'Hands'
+      ],
+
+      [
+        'Wrist position',
+        'Keep the wrist reasonably neutral and avoid prolonged extreme bending.',
+        'Wrist'
+      ],
+
+      [
+        'Arm support',
+        'Support your arms when possible instead of holding them unsupported for long periods.',
+        'Shoulders'
+      ],
+
+      [
+        'Viewing distance',
+        'Avoid holding the screen extremely close to your face for prolonged periods.',
+        'Eyes'
+      ]
+
+    ],
+
+    reset:[
+
+      [
+        '🧠',
+        'Chin Tucks',
+        'Bring your head gently backward instead of pushing it forward.',
+        30
+      ],
+
+      [
+        '↔️',
+        'Neck Movement',
+        'Slowly turn your head left and right within a comfortable range.',
+        30
+      ],
+
+      [
+        '👍',
+        'Thumb Mobility',
+        'Open and close your hands and gently move your thumbs.',
+        30
+      ],
+
+      [
+        '🤲',
+        'Wrist Mobility',
+        'Move your wrists gently and relax your grip.',
+        30
+      ],
+
+      [
+        '🚶',
+        'Stand & Move',
+        'Put the phone down and move around for a minute.',
+        60
+      ]
+
+    ]
+
+  },
+
+
+  console:{
+
+    name:'🎮 Console Gaming',
+
+    tips:[
+
+      [
+        'TV position',
+        'Position the screen so you do not need to constantly tilt your head up or down.',
+        'Neck'
+      ],
+
+      [
+        'Controller grip',
+        'Use a relaxed grip and avoid squeezing the controller unnecessarily.',
+        'Hands'
+      ],
+
+      [
+        'Shoulders',
+        'Keep your shoulders relaxed and avoid prolonged forward reaching.',
+        'Shoulders'
+      ],
+
+      [
+        'Back support',
+        'Use comfortable back support and change position regularly.',
+        'Back'
+      ],
+
+      [
+        'Legs & feet',
+        'Keep a comfortable lower-body position and move around during longer sessions.',
+        'Posture'
+      ]
+
+    ],
+
+    reset:[
+
+      [
+        '🧠',
+        'Neck Reset',
+        'Gently bring your head back and relax your neck.',
+        30
+      ],
+
+      [
+        '🔄',
+        'Shoulder Rolls',
+        'Slowly roll your shoulders backward and relax.',
+        30
+      ],
+
+      [
+        '🎮',
+        'Hand & Wrist Mobility',
+        'Relax your controller grip and gently move your fingers and wrists.',
+        30
+      ],
+
+      [
+        '🫁',
+        'Chest Opening',
+        'Open your chest gently and take comfortable breaths.',
+        30
+      ],
+
+      [
+        '🚶',
+        'Stand & Move',
+        'Get up from the gaming position and move around.',
+        60
+      ]
+
+    ]
+
   }
 
-  $('resetExercises').innerHTML =
-    exercises[platform].map(e => `
+};
 
-      <div class="exercise">
 
-        <div>
-          <b>${e[0]}</b>
-          <span>${e[1]}</span>
-        </div>
 
-        <span class="tag">${e[2]}</span>
+/* =========================
+   PLATFORM SELECTION
+========================= */
 
-      </div>
-
-    `).join('');
-
-  }
-/* PLATFORM SYSTEM */
-
-let selectedPlatform=
-  localStorage.getItem('ghaPlatform')||'';
+let selectedPlatform =
+  localStorage.getItem('ghaPlatform') || '';
 
 
 function selectPlatform(platform){
 
-  selectedPlatform=platform;
+  selectedPlatform = platform;
 
   localStorage.setItem(
     'ghaPlatform',
@@ -610,73 +1113,55 @@ function selectPlatform(platform){
 
   document
     .querySelectorAll('.platform')
-    .forEach(x=>x.classList.remove('active'));
+    .forEach(x =>
+      x.classList.remove('active')
+    );
 
-  $(platform+'Platform')
+  $(platform + 'Platform')
     .classList.add('active');
 
   showErgonomics(platform);
 
+  showReset(platform);
+
 }
 
 
+
+/* =========================
+   ERGONOMICS
+========================= */
+
 function showErgonomics(platform){
 
-  let data={
+  let chosen =
+    platformData[platform];
 
-    pc:{
-      name:'🖥️ PC / Laptop',
-      tips:[
-        ['Monitor position','Keep the top of the screen around eye level and avoid prolonged neck bending.','Eyes'],
-        ['Chair & back','Use back support and avoid collapsing forward for long periods.','Back'],
-        ['Keyboard & mouse','Keep your wrists comfortable and avoid extreme bending while playing.','Hands'],
-        ['Shoulders','Keep shoulders relaxed instead of constantly shrugging or reaching forward.','Neck'],
-        ['Feet','Support both feet when possible and avoid staying in one position too long.','Posture']
-      ]
-    },
-
-    mobile:{
-      name:'📱 Mobile Gaming',
-      tips:[
-        ['Phone position','Try bringing the phone closer to eye level instead of constantly looking down.','Neck'],
-        ['Thumbs','Avoid prolonged forceful thumb movements and take regular hand breaks.','Hands'],
-        ['Wrist position','Keep the wrist reasonably neutral and avoid prolonged extreme bending.','Wrist'],
-        ['Arm support','Support your arms when possible instead of holding them unsupported for long periods.','Shoulders'],
-        ['Viewing distance','Avoid holding the screen extremely close to your face for prolonged periods.','Eyes']
-      ]
-    },
-
-    console:{
-      name:'🎮 Console Gaming',
-      tips:[
-        ['TV position','Position the screen so you do not need to constantly tilt your head up or down.','Neck'],
-        ['Controller grip','Use a relaxed grip and avoid squeezing the controller unnecessarily.','Hands'],
-        ['Shoulders','Keep your shoulders relaxed and avoid prolonged forward reaching.','Shoulders'],
-        ['Back support','Use comfortable back support and change position regularly.','Back'],
-        ['Legs & feet','Keep a comfortable lower-body position and move around during longer sessions.','Posture']
-      ]
-    }
-
-  };
+  if(!chosen)return;
 
 
-  let chosen=data[platform];
-
-  $('platformStatus').textContent=
-    'Selected: '+chosen.name+
+  $('platformStatus').textContent =
+    'Selected: ' +
+    chosen.name +
     ' — your recommendations are personalized for this setup.';
 
-  $('ergonomics').innerHTML=
-    chosen.tips.map(t=>`
+
+  $('ergonomics').innerHTML =
+    chosen.tips.map(t => `
 
       <div class="exercise">
 
         <div>
+
           <b>${t[0]}</b>
+
           <span>${t[1]}</span>
+
         </div>
 
-        <span class="tag">${t[2]}</span>
+        <span class="tag">
+          ${t[2]}
+        </span>
 
       </div>
 
@@ -685,27 +1170,389 @@ function showErgonomics(platform){
 }
 
 
-/* ASSISTANT */
+
+/* =========================
+   RESET PLAYER
+========================= */
+
+let resetExercises = [];
+
+let resetIndex = 0;
+
+let resetRemaining = 0;
+
+let resetRunning = false;
+
+let resetInterval = null;
+
+
+function showReset(platform){
+
+  let chosen =
+    platformData[platform];
+
+  if(!chosen)return;
+
+  resetExercises =
+    chosen.reset;
+
+  resetIndex = 0;
+
+  resetRemaining =
+    resetExercises[0][3];
+
+  resetRunning = false;
+
+  clearInterval(resetInterval);
+
+  renderResetPlayer();
+
+}
+
+
+
+/* =========================
+   RESET PLAYER UI
+========================= */
+
+function renderResetPlayer(){
+
+  if(!resetExercises.length)return;
+
+
+  let current =
+    resetExercises[resetIndex];
+
+
+  let total =
+    resetExercises.reduce(
+      (sum,e) => sum + e[3],
+      0
+    );
+
+
+  let completed =
+    resetExercises
+      .slice(0,resetIndex)
+      .reduce(
+        (sum,e) => sum + e[3],
+        0
+      );
+
+
+  let progress =
+    (
+      (
+        completed +
+        (current[3] - resetRemaining)
+      ) / total
+    ) * 100;
+
+
+  $('resetArea').innerHTML = `
+
+    <div class="reset-player">
+
+      <div class="reset-icon">
+        ${current[0]}
+      </div>
+
+      <div class="reset-name">
+        ${current[1]}
+      </div>
+
+      <div class="reset-instruction">
+        ${current[2]}
+      </div>
+
+      <div class="reset-time">
+        ${formatResetTime(resetRemaining)}
+      </div>
+
+      <div class="progress-container">
+
+        <div
+          class="progress-bar"
+          style="width:${progress}%">
+        </div>
+
+      </div>
+
+
+      <div class="reset-actions">
+
+        <button
+          onclick="toggleReset()">
+
+          ${resetRunning ? '⏸️ Pause' : '▶️ Start Reset'}
+
+        </button>
+
+
+        <button
+          class="secondary"
+          onclick="restartReset()">
+
+          🔄 Restart
+
+        </button>
+
+      </div>
+
+
+      <div class="reset-status">
+
+        Exercise ${resetIndex + 1}
+        of ${resetExercises.length}
+
+      </div>
+
+
+      <div class="reset-list">
+
+        ${resetExercises.map((e,i)=>`
+
+          <div class="
+            reset-item
+            ${i === resetIndex ? 'active' : ''}
+            ${i < resetIndex ? 'done' : ''}
+          ">
+
+            <div class="reset-item-icon">
+              ${i < resetIndex ? '✓' : e[0]}
+            </div>
+
+            <div>
+              ${e[1]}
+            </div>
+
+          </div>
+
+        `).join('')}
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================
+   RESET TIMER
+========================= */
+
+function formatResetTime(seconds){
+
+  let m =
+    Math.floor(seconds / 60);
+
+  let s =
+    seconds % 60;
+
+  return (
+    String(m).padStart(2,'0') +
+    ':' +
+    String(s).padStart(2,'0')
+  );
+
+}
+
+
+function toggleReset(){
+
+  if(resetRunning){
+
+    resetRunning = false;
+
+    clearInterval(resetInterval);
+
+    renderResetPlayer();
+
+    return;
+
+  }
+
+
+  resetRunning = true;
+
+  renderResetPlayer();
+
+
+  resetInterval =
+    setInterval(()=>{
+
+      resetRemaining--;
+
+      if(resetRemaining <= 0){
+
+        resetRemaining = 0;
+
+        renderResetPlayer();
+
+        clearInterval(resetInterval);
+
+        resetRunning = false;
+
+        nextResetExercise();
+
+        return;
+
+      }
+
+      renderResetPlayer();
+
+    },1000);
+
+}
+
+
+
+/* =========================
+   NEXT EXERCISE
+========================= */
+
+function nextResetExercise(){
+
+  if(resetIndex <
+     resetExercises.length - 1){
+
+    resetIndex++;
+
+    resetRemaining =
+      resetExercises[resetIndex][3];
+
+    resetRunning = true;
+
+    renderResetPlayer();
+
+
+    resetInterval =
+      setInterval(()=>{
+
+        resetRemaining--;
+
+        if(resetRemaining <= 0){
+
+          clearInterval(resetInterval);
+
+          resetRunning = false;
+
+          nextResetExercise();
+
+          return;
+
+        }
+
+        renderResetPlayer();
+
+      },1000);
+
+  }
+
+  else{
+
+    completeReset();
+
+  }
+
+}
+
+
+
+/* =========================
+   COMPLETE RESET
+========================= */
+
+function completeReset(){
+
+  clearInterval(resetInterval);
+
+  resetRunning = false;
+
+  addBreak();
+
+
+  $('resetArea').innerHTML = `
+
+    <div class="reset-complete">
+
+      <div class="reset-complete-icon">
+        🎉
+      </div>
+
+      <h3>
+        Reset Complete!
+      </h3>
+
+      <p>
+        Nice work. You've completed your
+        3-minute gamer reset.
+      </p>
+
+      <button onclick="restartReset()">
+        🔄 Do It Again
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+
+/* =========================
+   RESTART RESET
+========================= */
+
+function restartReset(){
+
+  clearInterval(resetInterval);
+
+  resetRunning = false;
+
+  resetIndex = 0;
+
+  resetRemaining =
+    resetExercises[0][3];
+
+  renderResetPlayer();
+
+}
+
+
+
+/* =========================
+   ASSISTANT
+========================= */
 
 function ask(){
 
-  const q=
+  const q =
     $('question')
       .value
       .toLowerCase()
       .trim();
 
+
   if(!q)return;
 
 
-  let tips=[
+  let tips = [
+
     'Take a short break and change position.',
+
     'Keep movements gentle and within a comfortable range.',
+
     'Check your gaming setup and avoid staying in one position for too long.'
+
   ];
 
 
-  if(selectedPlatform==='pc'){
+  if(selectedPlatform === 'pc'){
 
     tips.push(
       'For PC gaming, check your monitor height, chair support, keyboard and mouse position.'
@@ -714,7 +1561,7 @@ function ask(){
   }
 
 
-  if(selectedPlatform==='mobile'){
+  if(selectedPlatform === 'mobile'){
 
     tips.push(
       'For mobile gaming, check your neck position, phone height, thumb use and wrist position.'
@@ -723,7 +1570,7 @@ function ask(){
   }
 
 
-  if(selectedPlatform==='console'){
+  if(selectedPlatform === 'console'){
 
     tips.push(
       'For console gaming, check your TV position, controller grip, shoulder posture and back support.'
@@ -732,53 +1579,93 @@ function ask(){
   }
 
 
-  if(q.includes('neck')||q.includes('shoulder')){
+  if(
+    q.includes('neck') ||
+    q.includes('shoulder')
+  ){
 
-    tips=[
+    tips = [
+
       'Try a few gentle chin tucks and shoulder-blade squeezes.',
+
       'Relax your shoulders and avoid holding your head forward for long periods.',
+
       ...tips
+
     ];
 
   }
 
 
-  if(q.includes('wrist')||q.includes('hand')||q.includes('thumb')){
+  if(
+    q.includes('wrist') ||
+    q.includes('hand') ||
+    q.includes('thumb')
+  ){
 
-    tips=[
+    tips = [
+
       'Give your hands a break and gently move the wrists and fingers.',
+
       'Check that your wrist is not held in an extreme bent position.',
+
       ...tips
+
     ];
 
   }
 
 
-  if(q.includes('eye')||q.includes('eyes')){
+  if(
+    q.includes('eye') ||
+    q.includes('eyes')
+  ){
 
-    tips=[
+    tips = [
+
       'Look away from the screen regularly and blink normally.',
+
       'Reduce glare and adjust screen brightness for comfort.',
+
       ...tips
+
     ];
 
   }
 
 
-  $('reply').innerHTML=
+  $('reply').innerHTML = `
 
-    '<div class="reply">'+
-    '<b>Here’s a general wellness suggestion:</b>'+
-    '<ul>'+
-    tips.map(x=>'<li>'+x+'</li>').join('')+
-    '</ul>'+
-    '<small>This is educational guidance, not a diagnosis or a substitute for professional medical care.</small>'+
-    '</div>';
+    <div class="reply">
+
+      <b>
+        Here's a general wellness suggestion:
+      </b>
+
+      <ul>
+
+        ${tips
+          .map(x => `<li>${x}</li>`)
+          .join('')}
+
+      </ul>
+
+      <small>
+        This is educational guidance, not a diagnosis
+        or a substitute for professional medical care.
+      </small>
+
+    </div>
+
+  `;
 
 }
 
 
-/* LOAD SAVED PLATFORM */
+
+/* =========================
+   LOAD SAVED PLATFORM
+========================= */
 
 function loadPlatform(){
 
@@ -786,22 +1673,40 @@ function loadPlatform(){
 
     document
       .querySelectorAll('.platform')
-      .forEach(x=>x.classList.remove('active'));
+      .forEach(x =>
+        x.classList.remove('active')
+      );
 
-   showErgonomics(platform);
-showReset(platform); 
 
-   showErgonomics(selectedPlatform);
-showReset(selectedPlatform);
+    $(selectedPlatform + 'Platform')
+      .classList.add('active');
+
+
+    showErgonomics(
+      selectedPlatform
+    );
+
+
+    showReset(
+      selectedPlatform
+    );
 
   }
 
 }
 
 
+
+/* =========================
+   START
+========================= */
+
 loadStats();
+
 render();
+
 loadPlatform();
+
 
 </script>
 
