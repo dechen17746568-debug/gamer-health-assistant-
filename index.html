@@ -375,46 +375,18 @@ This prototype tracks time locally in your browser. It does not diagnose medical
 
 <section class="card">
 
-<h2>🧘 3-Minute Reset</h2>
+<h2>🧘 Platform-Specific 3-Minute Reset</h2>
+
+<div id="resetExercises">
 
 <div class="exercise">
 <div>
-<b>Chin tucks</b>
-<span>Gentle, 8–10 repetitions.</span>
+<b>Choose your gaming platform</b>
+<span>Your reset exercises will adapt to your setup.</span>
 </div>
-<b>30s</b>
-</div>
-
-<div class="exercise">
-<div>
-<b>Shoulder blade squeezes</b>
-<span>Relax, squeeze gently, release.</span>
-</div>
-<b>30s</b>
+<span class="tag">3 min</span>
 </div>
 
-<div class="exercise">
-<div>
-<b>Chest stretch</b>
-<span>Comfortable stretch, no forcing.</span>
-</div>
-<b>30s</b>
-</div>
-
-<div class="exercise">
-<div>
-<b>Wrist movement</b>
-<span>Gentle flex/extend and shake out hands.</span>
-</div>
-<b>30s</b>
-</div>
-
-<div class="exercise">
-<div>
-<b>Walk around</b>
-<span>Stand up and move for a moment.</span>
-</div>
-<b>60s</b>
 </div>
 
 </section>
@@ -557,7 +529,70 @@ function quickBreak(){
   );
 }
 
+/* PLATFORM-SPECIFIC RESET */
 
+function showReset(platform){
+
+  let exercises = {
+
+    pc: [
+      ['🧠 Chin tucks','Gently draw your chin backward without looking down.','30s'],
+      ['💪 Shoulder blade squeezes','Gently bring your shoulder blades together and relax.','30s'],
+      ['⌨️ Wrist & forearm mobility','Move your wrists gently through comfortable ranges.','30s'],
+      ['🫁 Chest stretch','Open your chest gently and avoid forcing the stretch.','30s'],
+      ['🚶 Stand & walk','Stand up and walk around to change your position.','60s']
+    ],
+
+    mobile: [
+      ['🧠 Chin tucks','Bring your head gently backward instead of pushing it forward.','30s'],
+      ['↔️ Neck movement','Slowly turn your head left and right within a comfortable range.','30s'],
+      ['👍 Thumb mobility','Open and close your hands and gently move your thumbs.','30s'],
+      ['🤲 Wrist mobility','Move your wrists gently and relax your grip.','30s'],
+      ['🚶 Stand & move','Put the phone down and move around for a minute.','60s']
+    ],
+
+    console: [
+      ['🧠 Neck reset','Gently bring your head back and relax your neck.','30s'],
+      ['🔄 Shoulder rolls','Slowly roll your shoulders backward and relax.','30s'],
+      ['🎮 Hand & wrist mobility','Relax your controller grip and gently move your fingers and wrists.','30s'],
+      ['🫁 Chest stretch','Open your chest gently and take comfortable breaths.','30s'],
+      ['🚶 Stand & move','Get up from the gaming position and move around.','60s']
+    ]
+
+  };
+
+  if(!exercises[platform]){
+
+    $('resetExercises').innerHTML = `
+      <div class="exercise">
+        <div>
+          <b>Choose your gaming platform</b>
+          <span>Your reset exercises will adapt to your setup.</span>
+        </div>
+        <span class="tag">3 min</span>
+      </div>
+    `;
+
+    return;
+  }
+
+  $('resetExercises').innerHTML =
+    exercises[platform].map(e => `
+
+      <div class="exercise">
+
+        <div>
+          <b>${e[0]}</b>
+          <span>${e[1]}</span>
+        </div>
+
+        <span class="tag">${e[2]}</span>
+
+      </div>
+
+    `).join('');
+
+  }
 /* PLATFORM SYSTEM */
 
 let selectedPlatform=
@@ -753,10 +788,11 @@ function loadPlatform(){
       .querySelectorAll('.platform')
       .forEach(x=>x.classList.remove('active'));
 
-    $(selectedPlatform+'Platform')
-      .classList.add('active');
+   showErgonomics(platform);
+showReset(platform); 
 
-    showErgonomics(selectedPlatform);
+   showErgonomics(selectedPlatform);
+showReset(selectedPlatform);
 
   }
 
