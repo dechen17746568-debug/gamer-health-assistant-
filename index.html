@@ -1,13 +1,8 @@
 <!doctype html>
-<html lang="en">
 
-<head>
+<html lang="en"><head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Gamer Health Assistant</title>
-
-<style>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Gamer Health Assistant</title><style>
 
 :root{
   --bg:#0b1020;
@@ -62,6 +57,7 @@ button{
   cursor:pointer;
   background:var(--accent);
   color:white;
+  transition:.2s;
 }
 
 button:hover{
@@ -73,6 +69,7 @@ button:hover{
   display:grid;
   grid-template-columns:1.2fr .8fr;
   gap:18px;
+  margin-top:18px;
 }
 
 .card{
@@ -359,6 +356,23 @@ textarea{
 }
 
 
+/* GAME INFO */
+
+.game-focus{
+  background:#0d1427;
+  border:1px solid #2a395d;
+  border-radius:14px;
+  padding:15px;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.game-focus b{
+  display:block;
+  margin-bottom:5px;
+}
+
+
 /* RESPONSIVE */
 
 @media(max-width:760px){
@@ -385,7 +399,7 @@ textarea{
   }
 
   .platform-grid{
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2,1fr);
   }
 
   .stats{
@@ -398,264 +412,143 @@ textarea{
 
 }
 
-</style>
-
-</head>
-
-
-<body>
-
-<div class="app">
-
-
-<div class="top">
-
-<div>
-<h1>🎮 Gamer Health Assistant</h1>
-<div class="sub">
+</style></head><body><div class="app"><!-- HEADER --><div class="top"><div>
+<h1>🎮 Gamer Health Assistant</h1><div class="sub">
 Play better. Move better. Take smarter breaks.
-</div>
-</div>
-
-<button onclick="quickBreak()">
+</div></div><button onclick="quickBreak()">
 Take a break
-</button>
-
-</div>
-
-
-
-<!-- PLATFORM -->
-
-<section class="card">
-
-<h2>🎮 Choose Your Gaming Platform</h2>
-
-<div class="platform-grid">
-
-<div id="pcPlatform"
+</button></div><!-- PLATFORM --><section class="card"><h2>🎮 Choose Your Gaming Platform</h2><div class="platform-grid"><div id="pcPlatform"
      class="platform"
-     onclick="selectPlatform('pc')">
-
-<span class="platform-icon">🖥️</span>
+     onclick="selectPlatform('pc')"><span class="platform-icon">🖥️</span>
 
 <div class="platform-name">
 PC / Laptop
-</div>
-
-<div class="platform-desc">
+</div><div class="platform-desc">
 Keyboard, mouse & screen
-</div>
-
-</div>
-
-
-<div id="mobilePlatform"
+</div></div><div id="mobilePlatform"
      class="platform"
-     onclick="selectPlatform('mobile')">
-
-<span class="platform-icon">📱</span>
+     onclick="selectPlatform('mobile')"><span class="platform-icon">📱</span>
 
 <div class="platform-name">
 Mobile
-</div>
-
-<div class="platform-desc">
+</div><div class="platform-desc">
 Phone & touchscreen gaming
-</div>
-
-</div>
-
-
-<div id="consolePlatform"
+</div></div><div id="consolePlatform"
      class="platform"
-     onclick="selectPlatform('console')">
-
-<span class="platform-icon">🎮</span>
+     onclick="selectPlatform('console')"><span class="platform-icon">🎮</span>
 
 <div class="platform-name">
 Console
-</div>
-
-<div class="platform-desc">
+</div><div class="platform-desc">
 Controller gaming
-</div>
-
-</div>
-
-</div>
-
-
-<div id="platformStatus" class="selected">
+</div></div></div><div id="platformStatus" class="selected">
 Choose your platform to personalize your guidance.
-</div>
+</div></section><!-- GAME TYPE --><section class="card" style="margin-top:18px;"><h2>🎯 Choose Your Game Type</h2><div class="platform-grid"><div id="mobaGame"
+     class="platform"
+     onclick="selectGame('moba')"><span class="platform-icon">⚔️</span>
 
-</section>
+<div class="platform-name">
+MOBA
+</div><div class="platform-desc">
+MLBB, LoL, HoK
+</div></div><div id="fpsGame"
+     class="platform"
+     onclick="selectGame('fps')"><span class="platform-icon">🔫</span>
 
+<div class="platform-name">
+FPS
+</div><div class="platform-desc">
+CS, Valorant & more
+</div></div><div id="racingGame"
+     class="platform"
+     onclick="selectGame('racing')"><span class="platform-icon">🏎️</span>
 
+<div class="platform-name">
+Racing
+</div><div class="platform-desc">
+Racing & driving
+</div></div><div id="sportsGame"
+     class="platform"
+     onclick="selectGame('sports')"><span class="platform-icon">⚽</span>
 
-<div class="grid">
+<div class="platform-name">
+Sports
+</div><div class="platform-desc">
+Football, basketball & more
+</div></div><div id="rpgGame"
+     class="platform"
+     onclick="selectGame('rpg')"><span class="platform-icon">🧙</span>
 
+<div class="platform-name">
+RPG / Adventure
+</div><div class="platform-desc">
+Exploration & story games
+</div></div><div id="strategyGame"
+     class="platform"
+     onclick="selectGame('strategy')"><span class="platform-icon">♟️</span>
 
-
-<!-- GAMING TIMER -->
-
-<section class="card timer">
-
-<h2>Gaming Session</h2>
-
-<div id="time" class="time">
+<div class="platform-name">
+Strategy
+</div><div class="platform-desc">
+Strategy & tactical games
+</div></div></div><div id="gameStatus" class="selected">
+Choose your game type to personalize your guidance.
+</div></section><div class="grid"><!-- GAMING TIMER --><section class="card timer"><h2>Gaming Session</h2><div id="time" class="time">
 00:00:00
-</div>
-
-<div class="actions">
-
-<button id="start"
-        onclick="toggleTimer()">
+</div><div class="actions"><button id="start"
+onclick="toggleTimer()">
 Start session
 </button>
 
 <button class="secondary"
-        onclick="resetTimer()">
+onclick="resetTimer()">
 Reset
 </button>
 
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
+</div><div class="stats"><div class="stat">
 <div id="sessions" class="num">0</div>
 <div class="label">Sessions today</div>
-</div>
-
-<div class="stat">
+</div><div class="stat">
 <div id="breaks" class="num">0</div>
 <div class="label">Breaks today</div>
-</div>
-
-<div class="stat">
+</div><div class="stat">
 <div id="minutes" class="num">0</div>
 <div class="label">Gaming minutes</div>
-</div>
-
-</div>
-
-
-<div class="notice">
+</div></div><div class="notice">
 This prototype tracks time locally in your browser.
 It does not diagnose medical conditions.
-</div>
-
-</section>
-
-
-
-<!-- ERGONOMICS -->
-
-<section class="card">
-
-<h2>
-🪑 Platform-Specific Ergonomics
-</h2>
-
-<div id="ergonomics">
-
-<div class="exercise">
-
-<div>
-
-<b>Choose a platform</b>
+</div></section><!-- ERGONOMICS --><section class="card"><h2>
+🪑 Personalized Ergonomics
+</h2><div id="ergonomics"><div class="exercise"><div><b>Choose a platform and game</b>
 
 <span>
-We'll show recommendations based on how you game.
-</span>
-
-</div>
-
-<span class="tag">
+We'll show recommendations based on how you play.
+</span></div><span class="tag">
 Setup
-</span>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- RESET -->
-
-<section class="card">
-
-<h2>
+</span></div></div></section><!-- RESET --><section class="card"><h2>
 🧘 3-Minute Gamer Reset
-</h2>
-
-<div id="resetArea">
-
-<div class="exercise">
-
-<div>
-
-<b>Choose your gaming platform</b>
+</h2><div id="resetArea"><div class="exercise"><div><b>Choose your gaming platform</b>
 
 <span>
 Your reset exercises will adapt to your setup.
-</span>
-
-</div>
-
-<span class="tag">
+</span></div><span class="tag">
 3 min
-</span>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ASSISTANT -->
-
-<section class="card">
-
-<h2>
+</span></div></div></section><!-- ASSISTANT --><section class="card"><h2>
 🤖 Ask the Assistant
-</h2>
-
-<textarea
+</h2><textarea
 id="question"
 placeholder="Example: I've been gaming for 3 hours and my neck feels stiff...">
-</textarea>
-
-<button onclick="ask()">
+</textarea><button onclick="ask()">
 Get guidance
-</button>
-
-<div id="reply"></div>
-
-</section>
-
-
-</div>
-
-</div>
-
-
-
-<script>
+</button><div id="reply"></div></section></div></div><script>
 
 
 /* =========================
    BASIC HELPERS
 ========================= */
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 
 
@@ -664,23 +557,29 @@ const $ = id => document.getElementById(id);
 ========================= */
 
 let running = false;
+
 let startAt = 0;
+
 let elapsed = 0;
+
 let interval = null;
 
 
 function fmt(s){
 
-  let h = Math.floor(s / 3600);
+  let h =
+    Math.floor(s / 3600);
 
-  let m = Math.floor(
-    (s % 3600) / 60
-  );
+  let m =
+    Math.floor((s % 3600) / 60);
 
-  let x = s % 60;
+  let x =
+    s % 60;
 
   return [h,m,x]
-    .map(v => String(v).padStart(2,'0'))
+    .map(v =>
+      String(v).padStart(2,'0')
+    )
     .join(':');
 
 }
@@ -688,16 +587,18 @@ function fmt(s){
 
 function render(){
 
-  let s = Math.floor(
-    elapsed +
-    (
-      running
-      ? (Date.now() - startAt) / 1000
-      : 0
-    )
-  );
+  let s =
+    Math.floor(
+      elapsed +
+      (
+        running
+        ? (Date.now() - startAt) / 1000
+        : 0
+      )
+    );
 
-  $('time').textContent = fmt(s);
+  $('time').textContent =
+    fmt(s);
 
 }
 
@@ -708,13 +609,17 @@ function toggleTimer(){
 
     running = true;
 
-    startAt = Date.now();
+    startAt =
+      Date.now();
 
     $('start').textContent =
       'Pause session';
 
     interval =
-      setInterval(render,250);
+      setInterval(
+        render,
+        250
+      );
 
   }
 
@@ -781,7 +686,8 @@ function getStats(){
 
 function saveStats(min){
 
-  let d = getStats();
+  let d =
+    getStats();
 
   d.sessions++;
 
@@ -797,7 +703,8 @@ function saveStats(min){
 
 function addBreak(){
 
-  let d = getStats();
+  let d =
+    getStats();
 
   d.breaks++;
 
@@ -811,7 +718,8 @@ function addBreak(){
 
 function loadStats(){
 
-  let d = getStats();
+  let d =
+    getStats();
 
   $('sessions').textContent =
     d.sessions;
@@ -1095,16 +1003,61 @@ const platformData = {
 
 
 /* =========================
-   PLATFORM SELECTION
+   GAME DATA
+========================= */
+
+const gameData = {
+
+  moba:{
+    name:'⚔️ MOBA',
+    focus:'Long sessions, repeated hand movements, neck posture and visual concentration.'
+  },
+
+  fps:{
+    name:'🔫 FPS',
+    focus:'Mouse/controller movements, wrist position, shoulder tension and visual concentration.'
+  },
+
+  racing:{
+    name:'🏎️ Racing',
+    focus:'Prolonged sitting, steering/controller grip, shoulders and lower-back posture.'
+  },
+
+  sports:{
+    name:'⚽ Sports',
+    focus:'Controller movements, sitting posture, shoulders, wrists and prolonged sessions.'
+  },
+
+  rpg:{
+    name:'🧙 RPG / Adventure',
+    focus:'Long gaming sessions, seated posture, neck position and regular movement breaks.'
+  },
+
+  strategy:{
+    name:'♟️ Strategy',
+    focus:'Prolonged sitting, mouse/keyboard use, neck posture and visual concentration.'
+  }
+
+};
+
+
+
+/* =========================
+   SELECTION
 ========================= */
 
 let selectedPlatform =
   localStorage.getItem('ghaPlatform') || '';
 
+let selectedGame =
+  localStorage.getItem('ghaGame') || '';
+
+
 
 function selectPlatform(platform){
 
-  selectedPlatform = platform;
+  selectedPlatform =
+    platform;
 
   localStorage.setItem(
     'ghaPlatform',
@@ -1120,34 +1073,141 @@ function selectPlatform(platform){
   $(platform + 'Platform')
     .classList.add('active');
 
-  showErgonomics(platform);
+  showPlatformStatus(
+    platform
+  );
 
-  showReset(platform);
+  updateGuidance();
 
 }
 
 
 
-/* =========================
-   ERGONOMICS
-========================= */
-
-function showErgonomics(platform){
+function showPlatformStatus(platform){
 
   let chosen =
     platformData[platform];
 
   if(!chosen)return;
 
-
   $('platformStatus').textContent =
     'Selected: ' +
     chosen.name +
     ' — your recommendations are personalized for this setup.';
 
+}
+
+
+
+function selectGame(game){
+
+  selectedGame =
+    game;
+
+  localStorage.setItem(
+    'ghaGame',
+    game
+  );
+
+  document
+    .querySelectorAll('[id$="Game"]')
+    .forEach(x =>
+      x.classList.remove('active')
+    );
+
+  $(game + 'Game')
+    .classList.add('active');
+
+  showGameStatus(
+    game
+  );
+
+  updateGuidance();
+
+}
+
+
+
+function showGameStatus(game){
+
+  let chosen =
+    gameData[game];
+
+  if(!chosen)return;
+
+  $('gameStatus').textContent =
+    'Selected: ' +
+    chosen.name +
+    ' — ' +
+    chosen.focus;
+
+}
+
+
+
+/* =========================
+   PERSONALIZED GUIDANCE
+========================= */
+
+function updateGuidance(){
+
+  if(!selectedPlatform){
+
+    $('ergonomics').innerHTML = `
+
+      <div class="exercise">
+
+        <div>
+
+          <b>Choose a platform</b>
+
+          <span>
+          We'll show recommendations based on how you game.
+          </span>
+
+        </div>
+
+        <span class="tag">
+        Setup
+        </span>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  let platform =
+    platformData[selectedPlatform];
+
+  let tips =
+    [...platform.tips];
+
+
+  if(selectedGame){
+
+    let game =
+      gameData[selectedGame];
+
+
+    tips.push([
+
+      'Game focus',
+
+      game.focus,
+
+      'Gaming'
+
+    ]);
+
+  }
+
 
   $('ergonomics').innerHTML =
-    chosen.tips.map(t => `
+    tips.map(t => `
 
       <div class="exercise">
 
@@ -1155,17 +1215,25 @@ function showErgonomics(platform){
 
           <b>${t[0]}</b>
 
-          <span>${t[1]}</span>
+          <span>
+          ${t[1]}
+          </span>
 
         </div>
 
         <span class="tag">
-          ${t[2]}
+        ${t[2]}
         </span>
 
       </div>
 
     `).join('');
+
+
+
+  showReset(
+    selectedPlatform
+  );
 
 }
 
@@ -1211,10 +1279,6 @@ function showReset(platform){
 
 
 
-/* =========================
-   RESET PLAYER UI
-========================= */
-
 function renderResetPlayer(){
 
   if(!resetExercises.length)return;
@@ -1226,7 +1290,8 @@ function renderResetPlayer(){
 
   let total =
     resetExercises.reduce(
-      (sum,e) => sum + e[3],
+      (sum,e) =>
+        sum + e[3],
       0
     );
 
@@ -1235,7 +1300,8 @@ function renderResetPlayer(){
     resetExercises
       .slice(0,resetIndex)
       .reduce(
-        (sum,e) => sum + e[3],
+        (sum,e) =>
+          sum + e[3],
         0
       );
 
@@ -1244,7 +1310,10 @@ function renderResetPlayer(){
     (
       (
         completed +
-        (current[3] - resetRemaining)
+        (
+          current[3] -
+          resetRemaining
+        )
       ) / total
     ) * 100;
 
@@ -1254,19 +1323,19 @@ function renderResetPlayer(){
     <div class="reset-player">
 
       <div class="reset-icon">
-        ${current[0]}
+      ${current[0]}
       </div>
 
       <div class="reset-name">
-        ${current[1]}
+      ${current[1]}
       </div>
 
       <div class="reset-instruction">
-        ${current[2]}
+      ${current[2]}
       </div>
 
       <div class="reset-time">
-        ${formatResetTime(resetRemaining)}
+      ${formatResetTime(resetRemaining)}
       </div>
 
       <div class="progress-container">
@@ -1284,7 +1353,9 @@ function renderResetPlayer(){
         <button
           onclick="toggleReset()">
 
-          ${resetRunning ? '⏸️ Pause' : '▶️ Start Reset'}
+          ${resetRunning
+            ? '⏸️ Pause'
+            : '▶️ Start Reset'}
 
         </button>
 
@@ -1302,8 +1373,10 @@ function renderResetPlayer(){
 
       <div class="reset-status">
 
-        Exercise ${resetIndex + 1}
-        of ${resetExercises.length}
+        Exercise
+        ${resetIndex + 1}
+        of
+        ${resetExercises.length}
 
       </div>
 
@@ -1319,7 +1392,9 @@ function renderResetPlayer(){
           ">
 
             <div class="reset-item-icon">
-              ${i < resetIndex ? '✓' : e[0]}
+              ${i < resetIndex
+                ? '✓'
+                : e[0]}
             </div>
 
             <div>
@@ -1361,6 +1436,7 @@ function formatResetTime(seconds){
 }
 
 
+
 function toggleReset(){
 
   if(resetRunning){
@@ -1386,6 +1462,7 @@ function toggleReset(){
 
       resetRemaining--;
 
+
       if(resetRemaining <= 0){
 
         resetRemaining = 0;
@@ -1402,6 +1479,7 @@ function toggleReset(){
 
       }
 
+
       renderResetPlayer();
 
     },1000);
@@ -1411,18 +1489,22 @@ function toggleReset(){
 
 
 /* =========================
-   NEXT EXERCISE
+   NEXT RESET EXERCISE
 ========================= */
 
 function nextResetExercise(){
 
-  if(resetIndex <
-     resetExercises.length - 1){
+  if(
+    resetIndex <
+    resetExercises.length - 1
+  ){
 
     resetIndex++;
 
     resetRemaining =
-      resetExercises[resetIndex][3];
+      resetExercises[
+        resetIndex
+      ][3];
 
     resetRunning = true;
 
@@ -1434,9 +1516,14 @@ function nextResetExercise(){
 
         resetRemaining--;
 
-        if(resetRemaining <= 0){
 
-          clearInterval(resetInterval);
+        if(
+          resetRemaining <= 0
+        ){
+
+          clearInterval(
+            resetInterval
+          );
 
           resetRunning = false;
 
@@ -1445,6 +1532,7 @@ function nextResetExercise(){
           return;
 
         }
+
 
         renderResetPlayer();
 
@@ -1468,7 +1556,9 @@ function nextResetExercise(){
 
 function completeReset(){
 
-  clearInterval(resetInterval);
+  clearInterval(
+    resetInterval
+  );
 
   resetRunning = false;
 
@@ -1480,20 +1570,23 @@ function completeReset(){
     <div class="reset-complete">
 
       <div class="reset-complete-icon">
-        🎉
+      🎉
       </div>
 
       <h3>
-        Reset Complete!
+      Reset Complete!
       </h3>
 
       <p>
-        Nice work. You've completed your
-        3-minute gamer reset.
+      Nice work. You've completed your
+      3-minute gamer reset.
       </p>
 
-      <button onclick="restartReset()">
+      <button
+        onclick="restartReset()">
+
         🔄 Do It Again
+
       </button>
 
     </div>
@@ -1510,7 +1603,9 @@ function completeReset(){
 
 function restartReset(){
 
-  clearInterval(resetInterval);
+  clearInterval(
+    resetInterval
+  );
 
   resetRunning = false;
 
@@ -1579,6 +1674,17 @@ function ask(){
   }
 
 
+  if(selectedGame){
+
+    tips.push(
+      'Your selected game type is ' +
+      gameData[selectedGame].name +
+      '. Consider the demands of that game when planning breaks and movement.'
+    );
+
+  }
+
+
   if(
     q.includes('neck') ||
     q.includes('shoulder')
@@ -1639,20 +1745,22 @@ function ask(){
     <div class="reply">
 
       <b>
-        Here's a general wellness suggestion:
+      Here's a general wellness suggestion:
       </b>
 
       <ul>
 
         ${tips
-          .map(x => `<li>${x}</li>`)
+          .map(x =>
+            `<li>${x}</li>`
+          )
           .join('')}
 
       </ul>
 
       <small>
-        This is educational guidance, not a diagnosis
-        or a substitute for professional medical care.
+      This is educational guidance, not a diagnosis
+      or a substitute for professional medical care.
       </small>
 
     </div>
@@ -1664,7 +1772,7 @@ function ask(){
 
 
 /* =========================
-   LOAD SAVED PLATFORM
+   LOAD SAVED SETTINGS
 ========================= */
 
 function loadPlatform(){
@@ -1682,13 +1790,33 @@ function loadPlatform(){
       .classList.add('active');
 
 
-    showErgonomics(
+    showPlatformStatus(
       selectedPlatform
     );
 
+  }
 
-    showReset(
-      selectedPlatform
+}
+
+
+
+function loadGame(){
+
+  if(selectedGame){
+
+    document
+      .querySelectorAll('[id$="Game"]')
+      .forEach(x =>
+        x.classList.remove('active')
+      );
+
+
+    $(selectedGame + 'Game')
+      .classList.add('active');
+
+
+    showGameStatus(
+      selectedGame
     );
 
   }
@@ -1707,8 +1835,10 @@ render();
 
 loadPlatform();
 
+loadGame();
 
-</script>
+updateGuidance();
 
-</body>
-</html>
+
+</script></body>
+  </html>
